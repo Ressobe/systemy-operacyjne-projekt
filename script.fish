@@ -4,15 +4,16 @@
 # apt yum dnf pacman portage flatpak snap
 
 # Sprawdź, czy użytkownik jest rootem
-if not id -u | grep -q 0
-    echo "Skrypt musi być uruchomiony jako root!"
+if [ (id -u) -ne 0 ]
+    echo -e "\033[31mSkrypt musi być uruchomiony jako root\033[0m"
     exit
 end
 
 # Funkcja do instalowania pakietów
 function install_packages
     set package_manager $argv[1]
-    set -e packages $argv[2..-1]
+    set -l packages $argv[2..-1]
+
 
     switch $package_manager
         case "apt"
@@ -30,19 +31,24 @@ function install_packages
 end
 
 # Menedżer pakietów dostępne w skrypcie
-set supported_package_managers "pacman apt yum "
+set supported_package_managers "pacman" "apt"
+set -l packages  "vim" "git"
 
 # Wybierz menedżer pakietów
 echo "Dostępne menedżery pakietów: $supported_package_managers"
-echo "Wybierz menedżer pakietów (apt/yum/pacman): "
+echo "Wybierz menedżer pakietów (apt/pacman): "
 read package_manager
 
 
-if package_manager = "pacman"
-  echo "to jest pacman"
+# wypisz liste dostępnych package mangers w twoim systemie
+
+for element in $supported_package_managers
+  if test "$element" = "$package_manager"
+    install_packages $package_manager $packages
+  end
 end
 
-# Sprawdź, czy wybrany menedżer jest obsługiwany
+
 
 
 # Wczytaj listę pakietów z pliku (każda linia to nazwa pakietu)
