@@ -30,32 +30,35 @@ function install_packages
 end
 
 # Menedżer pakietów dostępne w skrypcie
-set supported_package_managers "apt yum pacman"
+set supported_package_managers "pacman apt yum "
 
 # Wybierz menedżer pakietów
 echo "Dostępne menedżery pakietów: $supported_package_managers"
-read -P "Wybierz menedżer pakietów (apt/yum/pacman): " package_manager
+echo "Wybierz menedżer pakietów (apt/yum/pacman): "
+read package_manager
+
+
+if package_manager = "pacman"
+  echo "to jest pacman"
+end
 
 # Sprawdź, czy wybrany menedżer jest obsługiwany
-if not contains -- $package_manager $supported_package_managers
-    echo "Nieobsługiwany menedżer pakietów: $package_manager"
-    exit 1
-end
+
 
 # Wczytaj listę pakietów z pliku (każda linia to nazwa pakietu)
-read -P "Podaj ścieżkę do pliku z listą pakietów: " package_list_file
-
-# Sprawdź, czy plik istnieje
-if not test -f "$package_list_file"
-    echo "Plik nie istnieje: $package_list_file"
-    exit 1
-end
-
-# Odczytaj listę pakietów z pliku
-set packages_to_install (cat "$package_list_file")
-
-# Zainstaluj pakiety
-install_packages $package_manager $packages_to_install
-
-# Komunikat po zakończeniu instalacji
-echo "Instalacja zakończona."
+# read -P "Podaj ścieżkę do pliku z listą pakietów: " package_list_file
+#
+# # Sprawdź, czy plik istnieje
+# if not test -f "$package_list_file"
+#     echo "Plik nie istnieje: $package_list_file"
+#     exit 1
+# end
+#
+# # Odczytaj listę pakietów z pliku
+# set packages_to_install (cat "$package_list_file")
+#
+# # Zainstaluj pakiety
+# install_packages $package_manager $packages_to_install
+#
+# # Komunikat po zakończeniu instalacji
+# echo "Instalacja zakończona."
