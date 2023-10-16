@@ -9,11 +9,31 @@ if [ (id -u) -ne 0 ]
     exit
 end
 
+
+
+if command -v apt-get >/dev/null
+    echo "Dostępny menedżer pakietów: Apt (Debian/Ubuntu)"
+# Sprawdź, czy istnieje DNF (Fedora)
+else if command -v dnf >/dev/null
+    echo "Dostępny menedżer pakietów: DNF (Fedora)"
+# Sprawdź, czy istnieje Pacman (Arch Linux)
+else if command -v pacman >/dev/null
+    echo "Dostępny menedżer pakietów: Pacman (Arch Linux)"
+# Jeśli nie znaleziono menedżera pakietów, wyświetl odpowiedni komunikat
+else
+    echo "Nie znaleziono znanych menedżerów pakietów."
+end
+
+
+
+
+
+
+
 # Funkcja do instalowania pakietów
 function install_packages
     set package_manager $argv[1]
     set -l packages $argv[2..-1]
-
 
     switch $package_manager
         case "apt"
@@ -47,6 +67,7 @@ for element in $supported_package_managers
     install_packages $package_manager $packages
   end
 end
+
 
 
 
