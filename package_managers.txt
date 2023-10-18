@@ -1,0 +1,9 @@
+pacman,-Syu
+apt,install 
+dnf,install 
+yum,install
+yay,-Syu 
+paru,-Syu 
+snap,install
+flatpak,install
+emerge,-av
