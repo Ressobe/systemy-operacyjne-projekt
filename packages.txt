@@ -1,0 +1,10 @@
+git
+vim
+neovim
+fish
+bash
+tmux
+neofetch
+htop
+firefox
+mpv

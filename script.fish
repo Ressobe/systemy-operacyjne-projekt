@@ -1,11 +1,12 @@
 #!/usr/bin/env fish
-#
 
 
-function wellcome_message
-  echo -e "\n"
-  echo -e "Witaj w instalatorze pakietów linux"
-  echo -e "=============================================\n"
+function is_valid_number
+    if math "$argv[1]" >/dev/null 2>&1
+        return 0
+    else
+        return 1
+    end
 end
 
 
@@ -19,30 +20,18 @@ function print_sucess
 end
 
 
+function wellcome_message
+  echo -e "\n"
+  echo -e "Witaj w instalatorze pakietów linux"
+  echo -e "=============================================\n"
+end
+
+
 function check_is_root
   if [ (id -u) -ne 0 ]
       echo -e "\n"
       print_error "skrypt musi być uruchomiony jako root (sudo) \n"
       exit
-  end
-end
-
-
-function install_packages
-    set package_manager $argv[1]
-    set -l packages $argv[2..-1]
-    # "package-manager" "install-command" "packages"
-end
-
-
-function later
-
-
-
-  for element in $supported_package_managers
-    if test "$element" = "$package_manager"
-      install_packages $package_manager $packages
-    end
   end
 end
 
@@ -58,6 +47,10 @@ function check_available_package_managers
       end
   end
 
+  if test (count $available_managers) -eq 0
+    print_error "Brak menedżerów pakietów na twoim systemie które są wspierane przez ten skrypt"
+    exit
+  end
 end
 
 
@@ -69,15 +62,6 @@ function print_available_package_managers
       echo "$i. $item"
       set i (math $i + 1)
   end
-end
-
-
-function is_valid_number
-    if math "$argv[1]" >/dev/null 2>&1
-        return 0
-    else
-        return 1
-    end
 end
 
 
@@ -102,7 +86,6 @@ function select_package_managers
     end
 
   end
-
 end
 
 
@@ -118,29 +101,61 @@ function get_path_to_packages
     else
         print_error "Ten plik '$user_path' nie istnieje"
     end
-
   end
+
+  set packages (cat $user_path)
+end
+
+
+function print_loaded_packages
+    echo -e "Lista pakietów do zainstalowania: \n"
+    for item in $packages
+      echo "$item"
+    end
+end
+
+
+function install_packages
+  echo "Czy chcesz zainstalować te pakiety: (y / n)"
+  read -P "> " response
+
+  if test $response = "n"
+    exit
+  end
+
+  echo "Instalowanie pakietów"
+  echo -e "=============================================\n"
+
+  echo "$available_managers[$user_number]"
 end
 
 
 set -g available_managers
-set -g user_path
+set -g packages
+set -g user_number
 
 
 function main
-  # check_is_root
+  # 1.Wiadomość powitalna
   wellcome_message
+
+  # 2.Sprawdzamy czy skrypt został uruchumiony jako root
+  check_is_root
+
+  # 3.Sprawdzamy jakie menedżery pakietów są dostępne w systemie
   check_available_package_managers
 
-  # while loop until user give valid index
+  # 4.Użytkownik wybiera menedżer pakietu który będzie służy do instalacji pakietów
   select_package_managers
 
-  # podaj scieżke do pliku z pakietami
+  # 5.Użytkownik podaje do pliku gdzie znajdują się nazwy pakietów
   get_path_to_packages
 
+  # 6.Wypisujemy nazwy pakietów które zostanły znalezione w pliku
+  print_loaded_packages
 
-  # Lista pakietów do zainstalowania  
-  # Czy chcesz kontynuować? (tak/nie): <tak_lub_nie>
+  # 7.Instalujemy pakiety
+  install_packages
 end
 
 main
