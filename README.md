@@ -24,3 +24,11 @@ This script is a user-friendly Linux package installer that allows you to select
    ```bash
    ./install_packages.fish
    ```
+
+## Configuration
+
+You can customize the list of supported package managers by editing the `.package_managers.txt` file.
+
+## Feedback and Contributions
+
+Feedback and contributions are welcome. Please create an issue or submit a pull request on GitHub.
