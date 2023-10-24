@@ -33,19 +33,19 @@ The Linux Package Installer Script is a powerful, user-friendly utility for inst
 1. Clone the repository to your local machine or download the script.
 
    ```bash
-   git clone https://github.com/yourusername/linux-package-installer.git
+   git clone https://github.com/Ressobe/systemy-operacyjne-projekt
    ```
 
 2. Navigate to the script's directory.
 
    ```bash
-   cd linux-package-installer
+   cd systemy-operacyjne-projekt
    ```
 
 3. Make the script executable.
 
    ```bash
-   chmod +x install_packages.fish
+   chmod +x run.fish
    ```
 
 ### Usage
