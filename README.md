@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Linux Package Installer Script is a powerful, user-friendly utility for installing packages on Linux systems. It allows users to select a package manager, specify a list of packages from a file, and perform installations seamlessly. Whether you're a system administrator or a casual user, this script simplifies the package management process on your Linux machine.
+The Linux Package Installer Script is a simple utility for installing packages on Linux systems. It allows users to select a package manager, specify a list of packages from a file, and perform installations seamlessly.
 
 **Features**:
 
@@ -52,17 +52,17 @@ The Linux Package Installer Script is a powerful, user-friendly utility for inst
 
 Running the Script
 
-1.Open your terminal.
+1. Open your terminal.
 
-2.Navigate to the directory where the script is located.
+2. Navigate to the directory where the script is located.
 
-3.Run the script using the following command:
+3. Run the script using the following command:
 
     ```bash
      ./run.fish
     ```
 
-4.Follow the on-screen instructions to:
+4. Follow the on-screen instructions to:
 
     Select a package manager.
     Provide the path to a text file containing a list of packages.
