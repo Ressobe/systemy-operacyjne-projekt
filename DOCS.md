@@ -2,14 +2,12 @@
 
 ## Spis treści
 
-    - Opis
-    - Wymagania
-    - Instalacja
-    - Jak korzystać
-    - Przykłady użycia
-    - Opcje i flagi
-    - Zmienne globalne
-    - Funkcje
+- Opis 
+- Wymagania
+- Instalacja
+- Zmienne globalne
+- Funkcje
+- Jak dodać menedżer pakietów
 
 ## Opis
 
@@ -17,42 +15,44 @@ Skrypt "Linux Package Installer" jest narzędziem do automatycznego instalowania
 
 ## Wymagania
 
-    System operacyjny Linux.
-    Dostępność przynajmniej jednego menedżera pakietów obsługiwanego przez skrypt (zdefiniowanego w pliku .package_managers.txt).
+- System operacyjny Linux.
+- Dostępność przynajmniej jednego menedżera pakietów obsługiwanego przez skrypt (zdefiniowanego w pliku .package_managers.txt).
 
 ## Instalacja
 
-    Pobierz skrypt na swój system.
-    Upewnij się, że masz odpowiednie uprawnienia do uruchamiania skryptu. Jeśli nie, możesz nadać odpowiednie uprawnienia za pomocą polecenia chmod.
-
-## Jak korzystać
-
-    Uruchom skrypt, używając polecenia ./run.fish w terminalu.
-    Postępuj zgodnie z instrukcjami wyświetlanymi przez skrypt.
-
-Przykłady użycia
-
-bash
-
-./nazwa_skryptu.fish
+Pobierz skrypt na swój system.
+Upewnij się, że masz odpowiednie uprawnienia do uruchamiania skryptu. Jeśli nie, możesz nadać odpowiednie uprawnienia za pomocą polecenia chmod.
 
 ## Zmienne globalne
 
-    package_managers: Lista menedżerów pakietów dostępnych w systemie, odczytywana z pliku .package_managers.txt.
-    available_managers: Lista menedżerów pakietów dostępnych na bieżącym systemie (wybranych z package_managers).
-    packages: Lista pakietów do zainstalowania.
-    user_number: Wybór użytkownika dotyczący menedżera pakietów.
+package_managers: Lista menedżerów pakietów dostępnych w systemie, odczytywana z pliku .package_managers.txt.
+
+available_managers: Lista menedżerów pakietów dostępnych na bieżącym systemie (wybranych z package_managers).
+
+packages: Lista pakietów do zainstalowania.
+
+user_number: Wybór użytkownika dotyczący menedżera pakietów.
 
 ## Funkcje
 
-    is_valid_number: Sprawdza, czy argument jest poprawną liczbą.
-    print_error: Wyświetla komunikat o błędzie.
-    print_success: Wyświetla komunikat o sukcesie.
-    wellcome_message: Wyświetla wiadomość powitalną.
-    check_is_root: Sprawdza, czy skrypt jest uruchomiony jako root.
-    check_available_package_managers: Sprawdza dostępność menedżerów pakietów na systemie.
-    print_available_package_managers: Wyświetla dostępne menedżery pakietów.
-    select_package_managers: Pozwala użytkownikowi wybrać menedżera pakietów.
-    get_path_to_packages: Pozwala użytkownikowi podać ścieżkę do pliku z listą pakietów.
-    print_loaded_packages: Wyświetla listę pakietów do zainstalowania.
-    install_packages: Instaluje wybrane pakiety i informuje o wynikach.
+is_valid_number: Sprawdza, czy argument jest poprawną liczbą.
+
+print_error: Wyświetla komunikat o błędzie.
+
+print_success: Wyświetla komunikat o sukcesie.
+    
+wellcome_message: Wyświetla wiadomość powitalną.
+    
+check_is_root: Sprawdza, czy skrypt jest uruchomiony jako root.
+    
+check_available_package_managers: Sprawdza dostępność menedżerów pakietów na systemie.
+    
+print_available_package_managers: Wyświetla dostępne menedżery pakietów.
+    
+select_package_managers: Pozwala użytkownikowi wybrać menedżera pakietów.
+    
+get_path_to_packages: Pozwala użytkownikowi podać ścieżkę do pliku z listą pakietów.
+    
+print_loaded_packages: Wyświetla listę pakietów do zainstalowania.
+    
+install_packages: Instaluje wybrane pakiety i informuje o wynikach.
