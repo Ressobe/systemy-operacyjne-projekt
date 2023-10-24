@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 
+# Function to check if an argument is a valid number
 function is_valid_number
     if math "$argv[1]" >/dev/null 2>&1
         return 0
@@ -10,16 +11,19 @@ function is_valid_number
 end
 
 
+# Function to print error messages
 function print_error
   echo -e "\033[31mError:\033[0m $argv[1]"
 end
 
 
+# Function to print success messages
 function print_sucess
   echo -e "\e[32mSucess:\e[0m $argv[1]"
 end
 
 
+# Function to display a welcome message
 function wellcome_message
   echo -e "\n"
   echo -e "Witaj w instalatorze pakietów linux"
@@ -27,6 +31,7 @@ function wellcome_message
 end
 
 
+# Function to check if the script is run as root
 function check_is_root
   if [ (id -u) -ne 0 ]
       echo -e "\n"
@@ -36,6 +41,7 @@ function check_is_root
 end
 
 
+# Function to check available package managers in the system
 function check_available_package_managers
   set package_managers (cat "./.package_managers.txt")
   set -l elements (string split , $package_managers)
@@ -54,16 +60,19 @@ function check_available_package_managers
 end
 
 
+# Function to print available package managers
 function print_available_package_managers
-  echo -e "Dostępne menedżery pakietów w twoim systemie\n"
+  echo -e "Dostępne menedżery pakietów w twoim systemie:"
   set i 1
   for item in $available_managers
       echo "$i. $item"
       set i (math $i + 1)
   end
+  echo -e "\n"
 end
 
 
+# Function to select a package manager
 function select_package_managers
   set list_length (count $available_managers)
   set continue_loop true
@@ -74,6 +83,7 @@ function select_package_managers
     echo "Podaj numer menedżera pakietów:"
     read -P "> " user_number
 
+    clear
     if ! is_valid_number $user_number
         print_error "Niepoprwany numer \n" 
       else
@@ -88,6 +98,7 @@ function select_package_managers
 end
 
 
+# Function to get the path to the file with a list of packages
 function get_path_to_packages
   set continue_loop true
 
@@ -95,10 +106,11 @@ function get_path_to_packages
     echo "Podaj ścieżkę do pliku tekstowego z listą pakietów:"
     read -P "> " user_path
 
+    clear
     if test -e "$user_path"
         set continue_loop false
     else
-        print_error "Ten plik '$user_path' nie istnieje"
+        print_error "Ten plik '$user_path' nie istnieje\n"
     end
   end
 
@@ -106,14 +118,17 @@ function get_path_to_packages
 end
 
 
+# Function to print the list of loaded packages
 function print_loaded_packages
-    echo -e "Lista pakietów do zainstalowania: \n"
+    echo -e "Lista pakietów do zainstalowania:"
     for item in $packages
       echo "$item"
     end
+    echo -e "\n"
 end
 
 
+# Function to install packages
 function install_packages
   echo "Czy chcesz zainstalować te pakiety: (y / n)"
   read -P "> " response
@@ -122,6 +137,7 @@ function install_packages
     exit
   end
 
+  clear
   echo "Instalowanie pakietów"
   echo -e "=============================================\n"
 
@@ -138,46 +154,59 @@ function install_packages
   end
 
   set flags $elements[(math $package_index + 1)]
+
+  set errors 0
   for item in $packages
     echo "Instalacja pakietu: $item ..."
     eval "$manager $flags $item" > /dev/null 2>&1
 
     if test $status -eq 0
-      print_sucess "Pakiet $item został zainstalowany"
+      print_sucess "Pakiet $item został zainstalowany \n"
     else
-      print_error "Pakiet $item nie został zainstalowany"
+      print_error "Pakiet $item nie został zainstalowany \n"
+      set errors (math $errors + 1)
     end
   end
 
+  if test $errors -eq 0
+    print_sucess "Wszystkie pakiety zostały zainstalowane"
+  else
+    print_error "Ilość pakietów które nie zostały zainstalowane: $errors"
+  end
 end
 
+
+# Global variables
 set -g package_managers
 set -g available_managers
 set -g packages
 set -g user_number
 
 
+# Main function
 function main
-  # 1.Wiadomość powitalna
+  # 1. Welcome message
   wellcome_message
 
-  # 2.Sprawdzamy czy skrypt został uruchumiony jako root
+  # 2. Check if the script is run as root
   check_is_root
 
-  # 3.Sprawdzamy jakie menedżery pakietów są dostępne w systemie
+  # 3. Check available package managers in the system
   check_available_package_managers
 
-  # 4.Użytkownik wybiera menedżer pakietu który będzie służy do instalacji pakietów
+  # 4. User selects the package manager to be used for package installation
   select_package_managers
 
-  # 5.Użytkownik podaje do pliku gdzie znajdują się nazwy pakietów
+  # 5. User provides the path to the file containing package names
   get_path_to_packages
 
-  # 6.Wypisujemy nazwy pakietów które zostanły znalezione w pliku
+  # 6. Print the names of packages found in the file
   print_loaded_packages
 
-  # 7.Instalujemy pakiety
+  # 7. Install the packages
   install_packages
 end
 
+
+clear
 main
