@@ -2,12 +2,13 @@
 
 ## Spis treści
 
-- Opis 
-- Wymagania
-- Instalacja
-- Zmienne globalne
-- Funkcje
-- Jak dodać menedżer pakietów
+- [Opis](#opis) 
+- [Wymagania](#wymagania)
+- [Instalacja](#instalacja)
+- [Zmienne globalne](#zmienne-globalne)
+- [Funkcje](#funkcje)
+- [Jak dodać menedżer pakietów](#jak-dodać-menedżer-pakietów)
+- [Jak powinien wyglądać plik packages.txt](#jak-powinien-wyglądać-plik-packages.txt)
 
 ## Opis
 
@@ -56,3 +57,18 @@ get_path_to_packages: Pozwala użytkownikowi podać ścieżkę do pliku z listą
 print_loaded_packages: Wyświetla listę pakietów do zainstalowania.
     
 install_packages: Instaluje wybrane pakiety i informuje o wynikach.
+
+## Jak dodać menedżer pakietów
+
+### Edycja Pliku .package_managers.txt:
+Otwórz plik .package_managers.txt, który znajduje się w katalogu, w którym jest zapisany skrypt. Dodaj nazwę nowego menedżera pakietów do tego pliku, a następnie, oddzielając ją przecinkiem, argumenty które pozwalają zainstalować pakiet bez potwierdzania
+
+## Jak powinien wyglądać plik packages.txt
+
+Plik packages.txt powinien zawierać listę nazw pakietów, które mają być zainstalowane przez skrypt Instalatora Pakietów Linux. Każda nazwa pakietu powinna znajdować się w osobnej linii. Oto przykład prostego pliku 
+
+```
+nazwa-pakietu-1
+nazwa-pakietu-2
+nazwa-pakietu-3
+```
