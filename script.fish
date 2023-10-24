@@ -57,8 +57,7 @@ end
 function print_available_package_managers
   echo -e "Dostępne menedżery pakietów w twoim systemie\n"
   set i 1
-  for index in (seq 1 2 (count $available_managers))
-      set item $available_managers[$index]
+  for item in $available_managers
       echo "$i. $item"
       set i (math $i + 1)
   end
@@ -126,10 +125,33 @@ function install_packages
   echo "Instalowanie pakietów"
   echo -e "=============================================\n"
 
-  echo "$available_managers[$user_number]"
+  set manager $available_managers[$user_number]
+  set -l elements (string split , $package_managers)
+
+  set package_index -1
+
+  for index in (seq 1 2 (count $elements))
+      set item $elements[$index]
+      if test "$item" = "$manager"
+        set package_index $index
+      end
+  end
+
+  set flags $elements[(math $package_index + 1)]
+  for item in $packages
+    echo "Instalacja pakietu: $item ..."
+    eval "$manager $flags $item" > /dev/null 2>&1
+
+    if test $status -eq 0
+      print_sucess "Pakiet $item został zainstalowany"
+    else
+      print_error "Pakiet $item nie został zainstalowany"
+    end
+  end
+
 end
 
-
+set -g package_managers
 set -g available_managers
 set -g packages
 set -g user_number

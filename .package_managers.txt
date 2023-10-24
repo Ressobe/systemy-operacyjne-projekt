@@ -1,9 +1,8 @@
-pacman,-Syu
-apt,install 
-dnf,install 
-yum,install
-yay,-Syu 
-paru,-Syu 
+pacman,-Syu --noconfirm
+apt,install -y
+dnf,install -y
+yum,install -y
+yay,-Syu --noconfirm
+paru,-Syu --noconfirm
 snap,install
-flatpak,install
-emerge,-av
+flatpak,install -y
